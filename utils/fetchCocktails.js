@@ -1,23 +1,14 @@
 import getElement from './getElement.js'
+import { showLoading } from './toggleLoading.js'
+import { hideLoading } from './toggleLoading.js'
 
-const loading = getElement('.loading')
-
-export default async (URL) => {
+export default async (url) => {
+  showLoading()
   try {
-    const res = await fetch(URL)
+    const res = await fetch(url)
     const data = await res.json()
-    const raw = [...data.drinks]
-    console.log(raw)
-    let cocktails = []
-    raw.map((item) => {
-      cocktails.push({
-        id: item.idDrink,
-        name: item.strDrink,
-        picture: item.strDrinkThumb,
-      })
-    })
-    loading.classList.add('hide-loading')
-    return cocktails
+
+    return data
   } catch (error) {
     console.log(error)
   }
